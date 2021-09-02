@@ -1,0 +1,14 @@
+version: '3'
+
+services:
+  toychain:
+    image: jasonsoft/toychain:latest
+    volumes:
+      - ${LOCAL_WORKSPACE_FOLDER}/config/app.yml:/app/config/app.yml
+    command: ./server node
+    networks:
+      - dev-network
+
+networks:
+  dev-network:
+      name: dev-network

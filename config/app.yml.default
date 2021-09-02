@@ -1,0 +1,11 @@
+app:
+  validator: "2vii4rSRYLgUP56q8jYUP6wQpNevqBDveLTrk1qB86gPEeHp3L"
+
+log:
+  - name: clog
+    type: console
+    min_level: debug
+
+db:
+  type: memory
+  location: ./db/badger
