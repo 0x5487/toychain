@@ -5,6 +5,7 @@ import (
 
 	badger "github.com/dgraph-io/badger/v3"
 	"github.com/nite-coder/blackbear/pkg/config"
+	"github.com/nite-coder/blackbear/pkg/log"
 )
 
 type Database struct {
@@ -19,9 +20,12 @@ func InitBadger() (*badger.DB, error) {
 
 	var opt badger.Options
 	switch strings.ToLower(dbType) {
+	default:
 	case "memory":
+		log.Info("badge in memory mode")
 		opt = badger.DefaultOptions("").WithInMemory(true)
 	case "file":
+		log.Info("badge in file mode")
 		location, _ := config.String("db.location", "")
 		opt = badger.DefaultOptions(location)
 	}

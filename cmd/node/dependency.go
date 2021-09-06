@@ -11,6 +11,7 @@ import (
 	badger "github.com/dgraph-io/badger/v3"
 	"github.com/nite-coder/blackbear/pkg/log"
 	"github.com/nite-coder/blackbear/pkg/web"
+	"github.com/nite-coder/blackbear/pkg/web/middleware"
 )
 
 var (
@@ -55,6 +56,7 @@ func initialize() error {
 
 	// web server
 	webServer = web.NewServer()
+	webServer.Use(middleware.NewHealth())
 	webServer.ErrorHandler = func(c *web.Context, err error) {
 		c.JSON(400, err.Error())
 		fmt.Println(err)

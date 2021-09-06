@@ -3,7 +3,7 @@ package repository
 import (
 	"bytes"
 	"context"
-	"encoding/gob"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"toychain/pkg/domain"
@@ -78,7 +78,7 @@ func (repo *BlockRepo) BlockTX(ctx context.Context, key []byte, txn *badger.Txn)
 	}
 
 	err = item.Value(func(val []byte) error {
-		decoder := gob.NewDecoder(bytes.NewReader(val))
+		decoder := json.NewDecoder(bytes.NewReader(val))
 		return decoder.Decode(&block)
 	})
 

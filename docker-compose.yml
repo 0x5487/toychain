@@ -5,6 +5,8 @@ services:
     image: jasonsoft/toychain:latest
     volumes:
       - ${LOCAL_WORKSPACE_FOLDER}/config/app.yml:/app/config/app.yml
+    ports:
+      - "8080:8080"
     command: ./server node
     networks:
       - dev-network

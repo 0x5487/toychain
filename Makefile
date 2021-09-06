@@ -2,6 +2,7 @@
 test:
 	go test -race -coverprofile=cover.out -covermode=atomic ./...
 
+
 .PHONY: build
 build:
 	- docker build --rm --file=./docker/toychain.Dockerfile --tag jasonsoft/toychain:latest .

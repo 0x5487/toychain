@@ -33,6 +33,11 @@ var RunCmd = &cobra.Command{
 		}
 		defer db.Close()
 
-		webServer.Run(":8080")
+		log.Info("web server is running")
+		err = webServer.Run(":8080")
+		if err != nil {
+			stdlog.Println(err.Error())
+		}
+
 	},
 }

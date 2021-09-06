@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/gob"
 	"encoding/hex"
+	"encoding/json"
 	"time"
 
 	badger "github.com/dgraph-io/badger/v3"
@@ -24,27 +24,13 @@ func (h *BlockHeader) ID() Identifier {
 	return sha256.Sum256(b)
 }
 
-func (b *BlockHeader) Serialize() ([]byte, error) {
-	var res bytes.Buffer
-	encoder := gob.NewEncoder(&res)
-
-	err := encoder.Encode(b)
+func (h *BlockHeader) Serialize() ([]byte, error) {
+	result, err := json.Marshal(&h)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.Bytes(), nil
-}
-
-func DeserializeBlock(data []byte) (*Block, error) {
-	var block Block
-	decoder := gob.NewDecoder(bytes.NewReader(data))
-
-	err := decoder.Decode(&block)
-	if err != nil {
-		return nil, err
-	}
-	return &block, nil
+	return result, nil
 }
 
 type Block struct {
@@ -69,22 +55,19 @@ func (b *Block) ID() Identifier {
 }
 
 func (b *Block) Serialize() ([]byte, error) {
-	var res bytes.Buffer
-	encoder := gob.NewEncoder(&res)
-
-	err := encoder.Encode(b)
+	result, err := json.Marshal(&b)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.Bytes(), nil
+	return result, nil
 }
 
 func (b *Block) AddTransaction(tx *Transaction) {
 	b.Transactions = append(b.Transactions, tx)
 
 	var res bytes.Buffer
-	encoder := gob.NewEncoder(&res)
+	encoder := json.NewEncoder(&res)
 	_ = encoder.Encode(b.Transactions)
 
 	aa := sha256.Sum256(res.Bytes())

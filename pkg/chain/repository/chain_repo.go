@@ -3,7 +3,7 @@ package repository
 import (
 	"bytes"
 	"context"
-	"encoding/gob"
+	"encoding/json"
 	"errors"
 	"fmt"
 	"toychain/pkg/domain"
@@ -35,7 +35,7 @@ func (repo *ChainRepo) LastBlockHeader(ctx context.Context) (*domain.BlockHeader
 		}
 
 		return item.Value(func(val []byte) error {
-			decoder := gob.NewDecoder(bytes.NewReader(val))
+			decoder := json.NewDecoder(bytes.NewReader(val))
 			return decoder.Decode(&blockHeader)
 		})
 	})

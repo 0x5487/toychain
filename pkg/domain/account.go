@@ -1,10 +1,9 @@
 package domain
 
 import (
-	"bytes"
 	"context"
 	"crypto/ed25519"
-	"encoding/gob"
+	"encoding/json"
 	"toychain/internal/pkg/crypto/base58"
 
 	badger "github.com/dgraph-io/badger/v3"
@@ -23,15 +22,12 @@ func (a *Account) Key() []byte {
 }
 
 func (a *Account) Serialize() ([]byte, error) {
-	var res bytes.Buffer
-	encoder := gob.NewEncoder(&res)
-
-	err := encoder.Encode(a)
+	result, err := json.Marshal(&a)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.Bytes(), nil
+	return result, nil
 }
 
 func AddressToPubKey(address string) (ed25519.PublicKey, error) {

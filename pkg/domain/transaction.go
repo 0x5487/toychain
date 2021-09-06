@@ -4,8 +4,8 @@ import (
 	"bytes"
 	"context"
 	"crypto/sha256"
-	"encoding/gob"
 	"encoding/hex"
+	"encoding/json"
 	"time"
 )
 
@@ -18,15 +18,12 @@ type Payload struct {
 }
 
 func (p *Payload) Serialize() ([]byte, error) {
-	var res bytes.Buffer
-	encoder := gob.NewEncoder(&res)
-
-	err := encoder.Encode(p)
+	result, err := json.Marshal(&p)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.Bytes(), nil
+	return result, nil
 }
 
 type Transaction struct {
@@ -56,15 +53,12 @@ func (tx *Transaction) ID() Identifier {
 }
 
 func (tx *Transaction) Serialize() ([]byte, error) {
-	var res bytes.Buffer
-	encoder := gob.NewEncoder(&res)
-
-	err := encoder.Encode(tx)
+	result, err := json.Marshal(&tx)
 	if err != nil {
 		return nil, err
 	}
 
-	return res.Bytes(), nil
+	return result, nil
 }
 
 type Receipt struct {

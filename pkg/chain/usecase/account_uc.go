@@ -53,7 +53,7 @@ func (uc *AccountUsecase) Account(ctx context.Context, address string) (*domain.
 	})
 
 	if err != nil {
-		return account, nil
+		return account, err
 	}
 
 	return account, nil

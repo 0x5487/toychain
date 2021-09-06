@@ -37,7 +37,6 @@ a simple blockchain for fun
 1. 查詢 `Account1` 和 `Account2` 的餘額
 1. 查詢區塊練高度
 
-
 ## TestAccount
 
 1. GOD
