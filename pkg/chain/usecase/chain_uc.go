@@ -179,7 +179,7 @@ func (uc *chainUsecase) packTransactionToBlock(ctx context.Context, pendingTrans
 				return err
 			}
 
-			if fromAccount.Nonce+1 != tx.Payload.Nonce {
+			if fromAccount.Nonce+1 < tx.Payload.Nonce {
 				logger.Debugf("nonce should be %d, but is %d", fromAccount.Nonce+1, tx.Payload.Nonce)
 				continue
 			}

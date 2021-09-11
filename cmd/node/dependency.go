@@ -56,6 +56,13 @@ func initialize() error {
 
 	// web server
 	webServer = web.NewServer()
+	options := middleware.Options{}
+	options.AllowOriginFunc = func(origin string) bool {
+		return true
+	}
+	options.AllowedMethods = []string{"GET", "POST", "PUT", "DELETE", "PATCH"}
+	options.AllowedHeaders = []string{"*", "Authorization", "Content-Type", "Origin", "Content-Length"}
+	webServer.Use(middleware.NewCors(options))
 	webServer.Use(middleware.NewHealth())
 	webServer.ErrorHandler = func(c *web.Context, err error) {
 		c.JSON(400, err.Error())

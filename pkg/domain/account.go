@@ -31,7 +31,7 @@ func (a *Account) Serialize() ([]byte, error) {
 }
 
 func AddressToPubKey(address string) (ed25519.PublicKey, error) {
-	bPubKey, err := base58.DecodeCheck("LteoBMKhjHjV14rEcLF154CPs9BY6JYqexDwkMQc2cGEWDvAv")
+	bPubKey, err := base58.DecodeCheck(address)
 	if err != nil {
 		return nil, err
 	}
